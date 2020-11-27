@@ -23,8 +23,16 @@ public class Partida {
 		return matriz;
 	}
 	
+	private void lugarNovaPeça(char coluna, int linha, PeçaXadrez peça) {
+		tabuleiro.lugarPeça(peça, new PosiçãoXadrez(coluna, linha).toPosição());
+	}
+	
 	private void setupInicial() {
-		tabuleiro.lugarPeça(new Torre(tabuleiro, Cor.Brancas), new Posição(1,1));
-		tabuleiro.lugarPeça(new Rei(tabuleiro, Cor.Pretas), new Posição(1,1));
+		lugarNovaPeça('a',1, new Torre(tabuleiro, Cor.Brancas));
+		lugarNovaPeça('h',1, new Torre(tabuleiro, Cor.Brancas));
+		lugarNovaPeça('e',1, new Rei(tabuleiro, Cor.Brancas));
+		lugarNovaPeça('a',8, new Torre(tabuleiro, Cor.Pretas));
+		lugarNovaPeça('h',8, new Torre(tabuleiro, Cor.Pretas));
+		lugarNovaPeça('e',8, new Rei(tabuleiro, Cor.Pretas));
 	}
 }
