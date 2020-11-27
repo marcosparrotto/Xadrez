@@ -24,7 +24,7 @@ public class Partida {
 	}
 	
 	private void setupInicial() {
-		tabuleiro.lugarPeça(new Torre(tabuleiro, Cor.Brancas), new Posição(2,1));
+		tabuleiro.lugarPeça(new Torre(tabuleiro, Cor.Brancas), new Posição(1,1));
 		tabuleiro.lugarPeça(new Rei(tabuleiro, Cor.Pretas), new Posição(1,1));
 	}
 }
