@@ -1,9 +1,12 @@
 package app;
 
+import xadrez.Partida;
+
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Hey");
+		Partida partida = new Partida();
+		UI.printTabuleiro(partida.getPeças());
 
 	}
 
