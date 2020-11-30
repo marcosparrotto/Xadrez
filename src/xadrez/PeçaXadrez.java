@@ -16,6 +16,10 @@ public abstract class PeçaXadrez extends Peça {
 		return cor;
 	}
 	
+	public PosiçãoXadrez getPosiçãoXadrez() {
+		return PosiçãoXadrez.fromPosição(posição);
+	}
+	
 	protected boolean haPeçaOponente(Posição posição) {
 		PeçaXadrez p = (PeçaXadrez) getTabuleiro().peça(posição);
 		return p != null && p.getCor() != cor;

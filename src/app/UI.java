@@ -51,10 +51,14 @@ public class UI {
 	
 	public static void printPartida(Partida partida, List<PeçaXadrez> capturadas) {
 		printTabuleiro(partida.getPeças());
+		System.out.println();
 		printPeçasCapturadas(capturadas);
 		System.out.println();
 		System.out.println("Turno: " + partida.getTurno());
 		System.out.println("Esperando jogador: " + partida.getJogadorAtual());
+		if(partida.getCheck()) {
+			System.out.println("CHECK!!");
+		}
 	}
 	
 	public static void printTabuleiro(PeçaXadrez[][] peças) {
@@ -100,7 +104,6 @@ public class UI {
 	private static void printPeçasCapturadas(List<PeçaXadrez> capturadas) {
 		List<PeçaXadrez> brancas = capturadas.stream().filter(x -> x.getCor() == Cor.Brancas).collect(Collectors.toList());
 		List<PeçaXadrez> pretas = capturadas.stream().filter(x -> x.getCor() == Cor.Pretas).collect(Collectors.toList());
-		System.out.println();
 		System.out.println("Pecas capturadas:");
 		System.out.print("Brancas: ");
 		System.out.print(ANSI_WHITE);
