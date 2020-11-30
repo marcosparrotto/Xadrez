@@ -7,11 +7,28 @@ import xadrez.peças.Rei;
 import xadrez.peças.Torre;
 
 public class Partida {
+	private int turno;
+	private Cor jogadorAtual;
 	private Tabuleiro tabuleiro;
 	
 	public Partida() {
 		tabuleiro = new Tabuleiro(8,8);
+		turno =1;
+		jogadorAtual = Cor.Brancas;
 		setupInicial();
+	}
+	
+	public int getTurno() {
+		return turno;
+	}
+	
+	public Cor getJogadorAtual() {
+		return jogadorAtual;
+	}
+
+	private void proximoTurno() {
+		turno++;
+		jogadorAtual = jogadorAtual == Cor.Brancas ? Cor.Pretas : Cor.Brancas;
 	}
 	
 	public PeçaXadrez[][] getPeças(){
@@ -35,6 +52,7 @@ public class Partida {
 		Posição destino = posiçãoDestino.toPosição();
 		validarPosiçãoDestino(origem, destino);
 		Peça peçaCapturada = realizeMovimento(origem, destino);
+		proximoTurno();
 		return (PeçaXadrez) peçaCapturada;
 	}
 	
@@ -48,6 +66,9 @@ public class Partida {
 	private void validarPosiçãoOrigem(Posição posição) {
 		if(!tabuleiro.existePeça(posição)) {
 			throw new XadrezException("Nao ha peca nesta posicao");
+		}
+		if(jogadorAtual != ((PeçaXadrez) tabuleiro.peça(posição)).getCor()) {
+			throw new XadrezException("Escolha uma peca sua");
 		}
 		if(!tabuleiro.peça(posição).haMovimentoPossivel() ) {
 			throw new XadrezException("Nao ha movimentos possiveis para peca escolhida");
