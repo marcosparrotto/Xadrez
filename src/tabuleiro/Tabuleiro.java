@@ -41,6 +41,19 @@ public class Tabuleiro {
 		peça.posição = posição;
 	}
 	
+	public Peça removerPeça(Posição posição) {
+		if(!posiçãoExiste(posição)) {
+			throw new TabuleiroException("Posição invalida");
+		}
+		if(peça(posição)==null) {
+			return null;
+		}
+		Peça aux = peça(posição);
+		aux.posição = null;
+		peças[posição.getLinha()][posição.getColuna()] = null;
+		return aux;
+	}
+	
 	public boolean posiçãoExiste(int linha, int coluna) {
 		return linha>=0 && linha<linhas && coluna >=0 && coluna<colunas;
 	}
