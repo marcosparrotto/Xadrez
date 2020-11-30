@@ -24,10 +24,15 @@ public class Partida {
 		return matriz;
 	}
 	
+	public boolean[][] possiveisMovimentos(PosiçãoXadrez posiçãoOrigem){
+		Posição origem = posiçãoOrigem.toPosição();
+		validarPosiçãoOrigem(origem);
+		return tabuleiro.peça(origem).possiveisMovimentos();
+	}
+	
 	public PeçaXadrez executarMovimentoXadrez(PosiçãoXadrez posiçãoOrigem, PosiçãoXadrez posiçãoDestino) {
 		Posição origem = posiçãoOrigem.toPosição();
 		Posição destino = posiçãoDestino.toPosição();
-		validarPosiçãoOrigem(origem);
 		validarPosiçãoDestino(origem, destino);
 		Peça peçaCapturada = realizeMovimento(origem, destino);
 		return (PeçaXadrez) peçaCapturada;

@@ -23,6 +23,9 @@ public class Main {
 				System.out.print("Origem: ");
 				PosiçãoXadrez origem = UI.lendoPosiçãoXadrez(sc);
 				
+				boolean[][] possiveisMovimentos = partida.possiveisMovimentos(origem);
+				UI.limparTela();
+				UI.printTabuleiro(partida.getPeças(), possiveisMovimentos);		
 				System.out.println();
 				System.out.print("Destino: ");
 				PosiçãoXadrez destino = UI.lendoPosiçãoXadrez(sc);
