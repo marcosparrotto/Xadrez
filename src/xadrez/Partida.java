@@ -41,7 +41,10 @@ public class Partida {
 	
 	private void validarPosiçãoOrigem(Posição posição) {
 		if(!tabuleiro.existePeça(posição)) {
-			throw new XadrezException("Nao ha peça nesta posiçao");
+			throw new XadrezException("Nao ha peca nesta posicao");
+		}
+		if(!tabuleiro.peça(posição).haMovimentoPossivel() ) {
+			throw new XadrezException("Nao ha movimentos possiveis para peca escolhida");
 		}
 	}
 	
