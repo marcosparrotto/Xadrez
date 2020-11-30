@@ -9,6 +9,7 @@ import tabuleiro.Posição;
 import tabuleiro.Tabuleiro;
 import xadrez.peças.Bispo;
 import xadrez.peças.Cavalo;
+import xadrez.peças.Dama;
 import xadrez.peças.Peão;
 import xadrez.peças.Rei;
 import xadrez.peças.Torre;
@@ -201,6 +202,7 @@ public class Partida {
 		lugarNovaPeça('a', 1, new Torre(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('b', 1, new Cavalo(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('c', 1, new Bispo(tabuleiro, Cor.Brancas));
+		lugarNovaPeça('d', 1, new Dama(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('e', 1, new Rei(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('f', 1, new Bispo(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('g', 1, new Cavalo(tabuleiro, Cor.Brancas));
@@ -217,6 +219,7 @@ public class Partida {
 		lugarNovaPeça('a', 8, new Torre(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('b', 8, new Cavalo(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('c', 8, new Bispo(tabuleiro, Cor.Pretas));
+		lugarNovaPeça('d', 8, new Dama(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('e', 8, new Rei(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('f', 8, new Bispo(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('g', 8, new Cavalo(tabuleiro, Cor.Pretas));
