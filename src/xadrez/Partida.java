@@ -21,6 +21,7 @@ public class Partida {
 	private boolean check;
 	private boolean checkMate;
 	private PeçaXadrez enPassant;
+	private PeçaXadrez promovida;
 
 	private List<Peça> peçasNoTabuleiro = new ArrayList<>();
 	private List<Peça> capturadas = new ArrayList<>();
@@ -50,6 +51,10 @@ public class Partida {
 
 	public PeçaXadrez getEnPassant() {
 		return enPassant;
+	}
+	
+	public PeçaXadrez getpromovida() {
+		return promovida;
 	}
 
 	private void proximoTurno() {
@@ -85,7 +90,17 @@ public class Partida {
 		}
 
 		PeçaXadrez peçaMovida = (PeçaXadrez) tabuleiro.peça(destino);
-
+		
+		//Promover o peão
+		promovida = null;
+		if(peçaMovida instanceof Peão) {
+			if((peçaMovida.getCor()==Cor.Brancas && destino.getLinha()==0) ||
+					(peçaMovida.getCor()==Cor.Pretas && destino.getLinha()==7)) {
+				promovida = (PeçaXadrez) tabuleiro.peça(destino);
+				promovida = alterarPeçaPromovida("D");
+			} 
+		}
+		
 		check = testarCheck(corOponente(jogadorAtual));
 
 		if (testarCheckMate(corOponente(jogadorAtual))) {
@@ -103,6 +118,33 @@ public class Partida {
 		}
 
 		return (PeçaXadrez) peçaCapturada;
+	}
+	
+	public PeçaXadrez alterarPeçaPromovida(String type) {
+		if(promovida == null) {
+			throw new IllegalStateException("Nao ha peca promovida");
+		}
+		if(!type.equals("T") && !type.equals("C") && !type.equals("B") && !type.equals("D")) {
+			return promovida;
+		}
+		
+		Posição pos = promovida.getPosiçãoXadrez().toPosição();
+		Peça p = tabuleiro.removerPeça(pos);
+		peçasNoTabuleiro.remove(p);
+		
+		PeçaXadrez novaPeça = novaPeça(type, promovida.getCor());
+		tabuleiro.lugarPeça(novaPeça, pos);
+		peçasNoTabuleiro.add(novaPeça);
+		
+		return novaPeça;
+	}
+	
+	private PeçaXadrez novaPeça(String type, Cor cor) {
+		if(type.equals("D")) return new Dama(tabuleiro, cor);
+		if(type.equals("T")) return new Torre(tabuleiro, cor);
+		if(type.equals("C")) return new Cavalo(tabuleiro, cor);
+		return new Bispo(tabuleiro, cor);
+		
 	}
 
 	private Peça realizeMovimento(Posição origem, Posição destino) {

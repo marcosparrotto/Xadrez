@@ -37,6 +37,15 @@ public class Main {
 				if(peçaCapturada != null) {
 					capturadas.add(peçaCapturada);
 				}
+				if(partida.getpromovida() != null) {
+					System.out.print("Escolha entre (T/C/B/D) para promover: ");
+					String type = sc.nextLine().toUpperCase();
+					while(!type.equals("T") && !type.equals("C") && !type.equals("B") && !type.equals("D")) {
+						System.out.print("Tipo nao encontrado, escolha entre (T/C/B/D) para promover: ");
+						type = sc.nextLine().toUpperCase();
+					}
+					partida.alterarPeçaPromovida(type);
+				}
 			} catch (XadrezException e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
