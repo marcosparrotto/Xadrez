@@ -78,10 +78,10 @@ public class Partida {
 			desfazerMovimento(origem, destino, peçaCapturada);
 			throw new XadrezException("Nao pode se colocar/continuar em Check!");
 		}
-		
+
 		check = testarCheck(corOponente(jogadorAtual));
-		
-		if(testarCheckMate(corOponente(jogadorAtual))){
+
+		if (testarCheckMate(corOponente(jogadorAtual))) {
 			checkMate = true;
 		} else {
 			proximoTurno();
@@ -98,6 +98,25 @@ public class Partida {
 			peçasNoTabuleiro.remove(peçaCapturada);
 			capturadas.add(peçaCapturada);
 		}
+
+		// Roque pequeno
+		if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
+			Posição origemTorreRei = new Posição(origem.getLinha(), origem.getColuna() + 3);
+			Posição destinoTorreRei = new Posição(destino.getLinha(), origem.getColuna() + 1);
+			PeçaXadrez torre = (PeçaXadrez) tabuleiro.removerPeça(origemTorreRei);
+			torre.incrementarcontagemMovimentos();
+			tabuleiro.lugarPeça(torre, destinoTorreRei);
+		}
+
+		// Roque grande
+		if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
+			Posição origemTorreDama = new Posição(origem.getLinha(), origem.getColuna() - 4);
+			Posição destinoTorreDama = new Posição(destino.getLinha(), origem.getColuna() - 1);
+			PeçaXadrez torre = (PeçaXadrez) tabuleiro.removerPeça(origemTorreDama);
+			torre.incrementarcontagemMovimentos();
+			tabuleiro.lugarPeça(torre, destinoTorreDama);
+		}
+
 		return peçaCapturada;
 	}
 
@@ -110,6 +129,25 @@ public class Partida {
 			capturadas.remove(peçaCapturada);
 			peçasNoTabuleiro.add(peçaCapturada);
 		}
+		
+		// Roque pequeno
+		if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
+			Posição origemTorreRei = new Posição(origem.getLinha(), origem.getColuna() + 3);
+			Posição destinoTorreRei = new Posição(destino.getLinha(), origem.getColuna() + 1);
+			PeçaXadrez torre = (PeçaXadrez) tabuleiro.removerPeça(destinoTorreRei);
+			torre.decrementarcontagemMovimentos();
+			tabuleiro.lugarPeça(torre, origemTorreRei);
+		}
+
+		// Roque grande
+		if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
+			Posição origemTorreDama = new Posição(origem.getLinha(), origem.getColuna() - 4);
+			Posição destinoTorreDama = new Posição(destino.getLinha(), origem.getColuna() - 1);
+			PeçaXadrez torre = (PeçaXadrez) tabuleiro.removerPeça(destinoTorreDama);
+			torre.decrementarcontagemMovimentos();
+			tabuleiro.lugarPeça(torre, origemTorreDama);
+		}
+
 	}
 
 	private void validarPosiçãoOrigem(Posição posição) {
@@ -173,13 +211,13 @@ public class Partida {
 			boolean[][] mat = p.possiveisMovimentos();
 			for (int i = 0; i < tabuleiro.getLinhas(); i++) {
 				for (int j = 0; j < tabuleiro.getColunas(); j++) {
-					if(mat[i][j]) {
+					if (mat[i][j]) {
 						Posição origem = ((PeçaXadrez) p).getPosiçãoXadrez().toPosição();
-						Posição destino = new Posição(i,j);
+						Posição destino = new Posição(i, j);
 						Peça peçaCapturada = realizeMovimento(origem, destino);
 						boolean testarCheck = testarCheck(cor);
 						desfazerMovimento(origem, destino, peçaCapturada);
-						if(!testarCheck) {
+						if (!testarCheck) {
 							return false;
 						}
 					}
@@ -203,11 +241,11 @@ public class Partida {
 		lugarNovaPeça('b', 1, new Cavalo(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('c', 1, new Bispo(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('d', 1, new Dama(tabuleiro, Cor.Brancas));
-		lugarNovaPeça('e', 1, new Rei(tabuleiro, Cor.Brancas));
+		lugarNovaPeça('e', 1, new Rei(tabuleiro, Cor.Brancas, this));
 		lugarNovaPeça('f', 1, new Bispo(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('g', 1, new Cavalo(tabuleiro, Cor.Brancas));
 		lugarNovaPeça('h', 1, new Torre(tabuleiro, Cor.Brancas));
-		
+
 		lugarNovaPeça('a', 7, new Peão(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('b', 7, new Peão(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('c', 7, new Peão(tabuleiro, Cor.Pretas));
@@ -220,7 +258,7 @@ public class Partida {
 		lugarNovaPeça('b', 8, new Cavalo(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('c', 8, new Bispo(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('d', 8, new Dama(tabuleiro, Cor.Pretas));
-		lugarNovaPeça('e', 8, new Rei(tabuleiro, Cor.Pretas));
+		lugarNovaPeça('e', 8, new Rei(tabuleiro, Cor.Pretas, this));
 		lugarNovaPeça('f', 8, new Bispo(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('g', 8, new Cavalo(tabuleiro, Cor.Pretas));
 		lugarNovaPeça('h', 8, new Torre(tabuleiro, Cor.Pretas));
