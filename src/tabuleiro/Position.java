@@ -1,10 +1,10 @@
 package tabuleiro;
 
-public class Posição {
+public class Position {
 	private int linha;
 	private int coluna;
 	
-	public Posição(int linha, int coluna) {
+	public Position(int linha, int coluna) {
 		this.linha = linha;
 		this.coluna = coluna;
 	}

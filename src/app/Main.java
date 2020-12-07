@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import xadrez.Partida;
-import xadrez.PeçaXadrez;
-import xadrez.PosiçãoXadrez;
+import xadrez.PieceXadrez;
+import xadrez.PositionXadrez;
 import xadrez.XadrezException;
 
 public class Main {
@@ -16,7 +16,7 @@ public class Main {
 		
 		Scanner sc = new Scanner(System.in);
 		Partida partida = new Partida();
-		List<PeçaXadrez> capturadas = new ArrayList<>();
+		List<PieceXadrez> capturadas = new ArrayList<>();
 		
 		while(!partida.getCheckMate()) {
 			try {
@@ -24,18 +24,18 @@ public class Main {
 				UI.printPartida(partida, capturadas);
 				System.out.println();
 				System.out.print("Origem: ");
-				PosiçãoXadrez origem = UI.lendoPosiçãoXadrez(sc);
+				PositionXadrez origem = UI.lendoPositionXadrez(sc);
 				
 				boolean[][] possiveisMovimentos = partida.possiveisMovimentos(origem);
 				UI.limparTela();
-				UI.printTabuleiro(partida.getPeças(), possiveisMovimentos);		
+				UI.printTabuleiro(partida.getpieces(), possiveisMovimentos);		
 				System.out.println();
 				System.out.print("Destino: ");
-				PosiçãoXadrez destino = UI.lendoPosiçãoXadrez(sc);
+				PositionXadrez destino = UI.lendoPositionXadrez(sc);
 				
-				PeçaXadrez peçaCapturada = partida.executarMovimentoXadrez(origem, destino);
-				if(peçaCapturada != null) {
-					capturadas.add(peçaCapturada);
+				PieceXadrez pieceCapturada = partida.executarMovimentoXadrez(origem, destino);
+				if(pieceCapturada != null) {
+					capturadas.add(pieceCapturada);
 				}
 				if(partida.getpromovida() != null) {
 					System.out.print("Escolha entre (T/C/B/D) para promover: ");
@@ -44,7 +44,7 @@ public class Main {
 						System.out.print("Tipo nao encontrado, escolha entre (T/C/B/D) para promover: ");
 						type = sc.nextLine().toUpperCase();
 					}
-					partida.alterarPeçaPromovida(type);
+					partida.alterarpiecePromovida(type);
 				}
 			} catch (XadrezException e) {
 				System.out.println(e.getMessage());

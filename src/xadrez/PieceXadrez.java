@@ -1,14 +1,14 @@
 package xadrez;
 
-import tabuleiro.Peça;
-import tabuleiro.Posição;
+import tabuleiro.Piece;
+import tabuleiro.Position;
 import tabuleiro.Tabuleiro;
 
-public abstract class PeçaXadrez extends Peça {
+public abstract class PieceXadrez extends Piece {
 	private Cor cor;
 	private int contagemMovimentos;
 
-	public PeçaXadrez(Tabuleiro tabuleiro, Cor cor) {
+	public PieceXadrez(Tabuleiro tabuleiro, Cor cor) {
 		super(tabuleiro);
 		this.cor = cor;
 	}
@@ -29,12 +29,12 @@ public abstract class PeçaXadrez extends Peça {
 		contagemMovimentos--;
 	}
 	
-	public PosiçãoXadrez getPosiçãoXadrez() {
-		return PosiçãoXadrez.fromPosição(posição);
+	public PositionXadrez getpositionXadrez() {
+		return PositionXadrez.fromposition(position);
 	}
 	
-	protected boolean haPeçaOponente(Posição posição) {
-		PeçaXadrez p = (PeçaXadrez) getTabuleiro().peça(posição);
+	protected boolean hapieceOponente(Position position) {
+		PieceXadrez p = (PieceXadrez) getTabuleiro().piece(position);
 		return p != null && p.getCor() != cor;
 	}
 

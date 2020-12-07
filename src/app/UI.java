@@ -4,13 +4,12 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import xadrez.Cor;
 import xadrez.Partida;
-import xadrez.PeçaXadrez;
-import xadrez.PosiçãoXadrez;
+import xadrez.PieceXadrez;
+import xadrez.PositionXadrez;
 
 public class UI {
 	
@@ -38,21 +37,21 @@ public class UI {
 	    System.out.flush();  
 	}
 	
-	public static PosiçãoXadrez lendoPosiçãoXadrez(Scanner sc){
+	public static PositionXadrez lendoPositionXadrez(Scanner sc){
 		try{
 			String s = sc.nextLine();
 			char coluna = s.charAt(0);
 			int linha = Integer.parseInt(s.substring(1));
-			return new PosiçãoXadrez(coluna, linha);
+			return new PositionXadrez(coluna, linha);
 		} catch(RuntimeException e) {
 			throw new InputMismatchException("Erro lendo posicao no Xadrez, valores validos a-h 1-8");
 		}
 	}
 	
-	public static void printPartida(Partida partida, List<PeçaXadrez> capturadas) {
-		printTabuleiro(partida.getPeças());
+	public static void printPartida(Partida partida, List<PieceXadrez> capturadas) {
+		printTabuleiro(partida.getpieces());
 		System.out.println();
-		printPeçasCapturadas(capturadas);
+		printpiecesCapturadas(capturadas);
 		System.out.println();
 		System.out.println("Turno: " + partida.getTurno());
 		if(!partida.getCheckMate()) {
@@ -68,29 +67,29 @@ public class UI {
 		
 	}
 	
-	public static void printTabuleiro(PeçaXadrez[][] peças) {
+	public static void printTabuleiro(PieceXadrez[][] peças) {
 		for(int i=0; i<peças.length;i++) {
 			System.out.print((8-i)+ " ");
 			for(int j=0; j<peças.length;j++) {
-				printPeça(peças[i][j], false);
+				printpiece(peças[i][j], false);
 			}
 			System.out.println();
 		}
 		System.out.println("  a b c d e f g h");
 	}
 	
-	public static void printTabuleiro(PeçaXadrez[][] peças, boolean[][] possiveisMovimentos) {
+	public static void printTabuleiro(PieceXadrez[][] peças, boolean[][] possiveisMovimentos) {
 		for(int i=0; i<peças.length;i++) {
 			System.out.print((8-i)+ " ");
 			for(int j=0; j<peças.length;j++) {
-				printPeça(peças[i][j], possiveisMovimentos[i][j]);
+				printpiece(peças[i][j], possiveisMovimentos[i][j]);
 			}
 			System.out.println();
 		}
 		System.out.println("  a b c d e f g h");
 	}
 	
-	private static void printPeça(PeçaXadrez peça, boolean corLetra) {
+	private static void printpiece(PieceXadrez peça, boolean corLetra) {
 		if(corLetra) {
 			System.out.print(ANSI_BLUE_BACKGROUND);
 		}
@@ -108,9 +107,9 @@ public class UI {
         System.out.print(" ");
 	}
 	
-	private static void printPeçasCapturadas(List<PeçaXadrez> capturadas) {
-		List<PeçaXadrez> brancas = capturadas.stream().filter(x -> x.getCor() == Cor.Brancas).collect(Collectors.toList());
-		List<PeçaXadrez> pretas = capturadas.stream().filter(x -> x.getCor() == Cor.Pretas).collect(Collectors.toList());
+	private static void printpiecesCapturadas(List<PieceXadrez> capturadas) {
+		List<PieceXadrez> brancas = capturadas.stream().filter(x -> x.getCor() == Cor.Brancas).collect(Collectors.toList());
+		List<PieceXadrez> pretas = capturadas.stream().filter(x -> x.getCor() == Cor.Pretas).collect(Collectors.toList());
 		System.out.println("Pecas capturadas:");
 		System.out.print("Brancas: ");
 		System.out.print(ANSI_WHITE);
